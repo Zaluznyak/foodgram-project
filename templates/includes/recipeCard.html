@@ -1,0 +1,25 @@
+{% load thumbnail %}
+<div class="card" data-id="{{ recipe.id }}">
+  {% thumbnail recipe.image '960x500' crop='center' as im %}
+  <a href="{% url 'foodgram:recipe' recipe.author.username recipe.id %}" class="link" target="_blank"><img src="{{ im.url }}" alt="{{ recipe.name }}"
+      class="card__image"></a>
+  {% endthumbnail %}
+  <div class="card__body">
+    <a class="card__title link" href="{% url 'foodgram:recipe' recipe.author.username recipe.id %}" target="_blank">{{ recipe.name }}</a>
+    <ul class="card__items">
+      {% for tag in recipe.tags.all %}
+        <li class="card__item"><span class="badge badge_style_{{ tag.color }}">{{ tag.get_ingestion_display }}</span></li>
+      {% endfor %}
+    </ul>
+    <div class="card__items card__items_column">
+      <p class="card__text"><span class="icon-time"></span> {{ recipe.time }} мин.</p>
+      <p class="card__text"><span class="icon-user"></span> <a href="{% url 'foodgram:profile' recipe.author.username %}" style="color: black"> {{ recipe.author }}</a></p>
+    </div>
+  </div>
+  {% if user.is_authenticated %}
+  <div class="card__footer">
+    {% include 'includes/button_purchase.html' %}  
+    {% include 'includes/button_favorite.html' with recipe=recipe big=False %}
+  </div>
+  {% endif %}
+</div>

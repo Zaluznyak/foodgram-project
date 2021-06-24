@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Войти на сайт{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'pages/form.css' %}">
+{% endblock %}
+{% block content %}
+<div class="main__header">
+        <h1 class="main__title">Войти на сайт</h1>
+</div>
+    <div class="form-container">
+        <form class="form" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            {% include 'includes/form_auth.html' %}
+            {% endfor %}
+            
+            <span class="form__error">{{ form.non_field_errors }}</span>
+            <div class="form__footer">
+                <button type="submit" class="button button_style_blue">Войти</button>
+                <a class="form__forgot-link" href="{% url 'password_reset' %}">Забыли пароль?</a>
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

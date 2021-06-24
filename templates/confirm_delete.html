@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление{% endblock %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="custom-center-block">
+    <p class="custom-text-block">Вы действительно хотите удалить рецепт "{{ object }}"?!</p>
+    <div class="custom-button-block">
+        <form
+                action="{% url 'foodgram:recipe_delete' recipe.author.username recipe.id %}"
+                method="post">
+            {% csrf_token %}
+            <button class="button button_style_blue" type="submit">Да</button>
+            <a href="{% url 'foodgram:index' %}" class="button">Нет</a></li>
+        </form>
+    </div>
+  </div>
+{% endblock %}

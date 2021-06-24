@@ -1,0 +1,12 @@
+{% load recipe_filters %}
+<ul class="tags">
+    {% for tag in tags %}
+        <li class="tags__item">
+            <a id="{{ tag.title }}"
+                class="tags__checkbox tags__checkbox_style_{{ tag.color }} {% if tag.ingestion in active_tags %} tags__checkbox_active {% endif %}"
+                href="?{% manage_tags tag=tag.ingestion %}">
+            </a>
+            <span class="tags__label">{{ tag.get_ingestion_display }}</span>
+        </li>
+    {% endfor %}
+</ul>
