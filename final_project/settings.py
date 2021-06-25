@@ -9,6 +9,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ.get('SECRET')
 DEBUG = False
 
+AUTH_USER_MODEL = 'users.User'
 ALLOWED_HOSTS = ['127.0.0.1',
                  '84.252.135.106']
 
@@ -81,7 +82,6 @@ else:
         }
     }
 
-AUTH_USER_MODEL = 'users.User'
 
 
 AUTH_PASSWORD_VALIDATORS = [
