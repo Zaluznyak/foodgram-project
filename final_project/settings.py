@@ -7,9 +7,8 @@ env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = os.environ.get('SECRET')
-DEBUG = False
+DEBUG = True
 
-AUTH_USER_MODEL = 'users.User'
 ALLOWED_HOSTS = ['127.0.0.1',
                  '84.252.135.106']
 
@@ -62,6 +61,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'final_project.wsgi.application'
+AUTH_USER_MODEL = 'users.User'
 
 if DEBUG:
     DATABASES = {
@@ -81,7 +81,6 @@ else:
             'PORT': os.environ.get('DB_PORT'),
         }
     }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
