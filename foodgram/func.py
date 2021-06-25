@@ -28,7 +28,7 @@ def shoplist_ingredients(request_user):
     )
     now = datetime.datetime.now()
     date = now.strftime("%d-%m-%Y %H:%M")
-    download_list = [f'~~~ Список покупок ~~~ \r\n {date} \r\n']
+    download_list = [f"~~~ Список покупок ~~~ \r\n {date} \r\n"]
     for ingredient in ingredients:
         download_list.append(
             f'{ingredient["ingredient__name"]} '

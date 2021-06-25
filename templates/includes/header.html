@@ -12,6 +12,7 @@
             </ul>
             {% endwith %}
             <ul class="nav__items list">
+                <li class="nav__item"><a href="{% url 'foodgram:profile' user.username %}" class="nav__link link"><b>{{ user.username }}</b></a></li>
                 <li class="nav__item"><a href="{% url 'password_change' %}" class="nav__link link">Изменить пароль</a></li>
                 <li class="nav__item"><a href="{% url 'logout' %}" class="nav__link link">Выход</a></li>
             </ul>

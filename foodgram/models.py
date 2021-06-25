@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.core.validators import MinValueValidator
 
 User = get_user_model()
 
@@ -24,6 +25,10 @@ class Tag(models.Model):
                              default=ColorChoices.GREEN, unique=True,
                              max_length=10, verbose_name='Цвет')
 
+    class Meta:
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
+
     def __str__(self):
         return self.ingestion
 
@@ -37,6 +42,8 @@ class Ingredients(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['name', 'dimension'],
                                                name='unique_ingredients')]
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
         return self.name
@@ -52,7 +59,8 @@ class Recipe(models.Model):
     )
     text = models.TextField('Описание')
     time = models.PositiveSmallIntegerField('Время приготовления',
-                                            help_text='В минутах')
+                                            help_text='В минутах',
+                                            validators=[MinValueValidator(1)])
     tags = models.ManyToManyField(Tag, blank=True, related_name='recipes',
                                   verbose_name='Тег')
     ingredients = models.ManyToManyField(Ingredients,
@@ -63,6 +71,8 @@ class Recipe(models.Model):
 
     class Meta:
         ordering = ["-pub_date"]
+        verbose_name = 'Рецепт'
+        verbose_name_plural = 'Рецепты'
 
     def __str__(self):
         return self.name
@@ -74,7 +84,14 @@ class RecipeIngredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,
                                verbose_name='Рецепт',
                                related_name='recipe_ingredient')
-    quantity = models.PositiveSmallIntegerField('Количество')
+    quantity = models.PositiveSmallIntegerField(
+        'Количество',
+        validators=[MinValueValidator(1)]
+        )
+
+    class Meta:
+        verbose_name = 'Ингредиент'
+        verbose_name_plural = 'Ингредиенты'
 
     def __str__(self):
         return self.ingredient.name
@@ -90,6 +107,8 @@ class Favorites(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['user', 'recipe'],
                                                name='unique_favorites')]
+        verbose_name = 'Избранное'
+        verbose_name_plural = 'Избранное'
 
     def __str__(self):
         return self.recipe.name
@@ -107,6 +126,8 @@ class ShopList(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['user', 'recipe'],
                                                name='unique_list')]
+        verbose_name = 'Покупка'
+        verbose_name_plural = 'Список покупок'
 
     def __str__(self):
         return self.recipe.name

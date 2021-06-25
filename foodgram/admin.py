@@ -1,7 +1,13 @@
 from django.contrib import admin
 
 from .models import (Favorites, Ingredients, ShopList,
-                     Recipe, RecipeIngredient, Tag)
+                     Recipe, Tag)
+
+
+class IngredientInline(admin.TabularInline):
+    model = Recipe.ingredients.through
+    autocomplete_fields = ('ingredient', )
+    min_num = 1
 
 
 class IngredientsAdmin(admin.ModelAdmin):
@@ -13,15 +19,13 @@ class RecipeAdmin(admin.ModelAdmin):
     def count_favorites(self, obj):
         return obj.Favorites_recipes.count()
 
-    count_favorites.short_description = 'favorites'
+    count_favorites.short_description = 'В избранном'
 
+    inlines = (IngredientInline, )
     list_display = ('pk', 'name', 'author', 'count_favorites')
     search_fields = ('name', 'author__username')
+    autocomplete_fields = ('author',)
     list_filter = ('pub_date',)
-
-
-class RecipeIngredientAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'recipe', 'ingredient', 'quantity')
 
 
 class TagAdmin(admin.ModelAdmin):
@@ -39,6 +43,5 @@ class ShopListAdmin(admin.ModelAdmin):
 admin.site.register(ShopList, ShopListAdmin)
 admin.site.register(Favorites, FavoritesAdmin)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(RecipeIngredient, RecipeIngredientAdmin)
 admin.site.register(Recipe, RecipeAdmin)
 admin.site.register(Ingredients, IngredientsAdmin)

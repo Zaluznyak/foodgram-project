@@ -6,6 +6,10 @@ class UserRole(models.TextChoices):
     USER = 'user'
     ADMIN = 'admin'
 
+    class Meta:
+        verbose_name = 'Роль'
+        verbose_name_plural = 'Роли'
+
 
 class User(AbstractUser):
     username = models.CharField('Логин', blank=False, unique=True,
@@ -16,10 +20,14 @@ class User(AbstractUser):
     email = models.EmailField('Почта', unique=True, blank=False)
     role = models.CharField(
         'Роль',
-        max_length=9,
+        max_length=36,
         choices=UserRole.choices,
         default=UserRole.USER
     )
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
     @property
     def is_admin(self):
@@ -36,6 +44,8 @@ class Follow(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['user', 'author'], name='unique')
             ]
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'
 
     def __str__(self):
         return f'{self.user.username} подписан на {self.author.username}'

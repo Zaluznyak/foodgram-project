@@ -22,11 +22,28 @@
     </div>
     {% endif %}
 
-  <div class="card-list">
-    {% for recipe in page_obj %}
-      {% include 'includes/recipeCard.html' with recipe=recipe %}
-    {% endfor %}
-  </div>
+  
+    {% if page_obj %}
+    <div class="card-list">
+        {% for recipe in page_obj %}
+        {% include 'includes/recipeCard.html' with recipe=recipe %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="custom-center-block">
+        {% if author == user %}
+        <p class="custom-text-block">У Вас еще нет рецептов.</p>
+        <div class="custom-button-block">
+            <a href="{% url 'foodgram:new' %}" class="button button_style_blue">Создать рецепт</a>
+        </div>
+        {% else %}
+        <p class="custom-text-block">У {{ author.username }} еще нет рецептов.</p>
+        <div class="custom-button-block">
+            <a href="{% url 'foodgram:index' %}" class="button button_style_blue">Перейти на главную</a>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
 
   {% if page_obj.has_other_pages %}
     {% include 'includes/paginator.html' with page=page_obj paginator=paginator %}

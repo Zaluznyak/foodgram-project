@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -28,18 +30,17 @@ class IndexView(TagMixin, BaseFilterView, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if not self.request.user.is_authenticated:
+            return queryset
         user = self.request.user
-        if self.request.user.is_authenticated:
-            queryset = queryset.annotate(
-                is_favorites=Exists(Favorites.objects.filter(
-                    user=user,
-                    recipe=OuterRef('pk'),),
-                    ),
-                    ).annotate(is_purchase=Exists(
-                        ShopList.objects.filter(
-                            user=user,
-                            recipe=OuterRef('pk'),
-                            ),),)
+        queryset = queryset.annotate(is_favorited=Exists(
+            Favorites.objects.filter(
+                user=user,
+                recipe=OuterRef('pk'),),
+                ),).annotate(is_shop_list=Exists(
+                    ShopList.objects.filter(
+                        user=user,
+                        recipe=OuterRef('pk'),),),)
         return queryset
 
 
@@ -142,15 +143,17 @@ class ShopListView(LoginRequiredMixin, ListView):
 
 @login_required
 def shoplist_download(request):
+    now = datetime.datetime.now()
+    date = now.strftime('%d-%m-%Y')
     result = shoplist_ingredients(request.user)
     response = HttpResponse(result, content_type='text/plain')
-    response['Content-Disposition'] = 'attachment; filename = download.txt'
+    response['Content-Disposition'] = f'attachment; filename = {date}.txt'
     return response
 
 
 def page_not_found(request, exception=None):
-    return render(request, "misc/404.html", {"path": request.path}, status=404)
+    return render(request, 'misc/404.html', {'path': request.path}, status=404)
 
 
 def server_error(request):
-    return render(request, "misc/500.html", status=500)
+    return render(request, 'misc/500.html', status=500)
