@@ -57,15 +57,15 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPOSITORY }}
             sudo docker-compose stop
             sudo docker-compose rm web
-            touch .env 
-            echo SECRET=${{ secrets.SECRET }} >> .env
-            echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
-            echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-            echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
-            echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
-            echo DB_HOST=${{ secrets.DB_HOST }} >> .env
-            echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             sudo docker-compose up -d
+            sudo docker-compose exec -T web touch .dev 
+            sudo docker-compose exec -T web echo SECRET=${{ secrets.SECRET }} >> .env
+            sudo docker-compose exec -T web echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
+            sudo docker-compose exec -T web echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+            sudo docker-compose exec -T web echo POSTGRES_USER=${{ secrets.POSTGRES_USER }} >> .env
+            sudo docker-compose exec -T web echo POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} >> .env
+            sudo docker-compose exec -T web echo DB_HOST=${{ secrets.DB_HOST }} >> .env
+            sudo docker-compose exec -T web echo DB_PORT=${{ secrets.DB_PORT }} >> .env
             sudo docker-compose exec -T web python manage.py makemigrations api
             sudo docker-compose exec -T web python manage.py makemigrations users
             sudo docker-compose exec -T web python manage.py makemigrations foodgram
