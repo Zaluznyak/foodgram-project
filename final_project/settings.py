@@ -116,13 +116,11 @@ USE_TZ = True
 PAGE = 6  # Количество объектов на странице
 
 STATIC_URL = '/static/'
-_STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-if DEBUG:
-    STATICFILES_DIRS = (_STATIC_ROOT, )
-else:
-    STATIC_ROOT = _STATIC_ROOT
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
 LOGIN_URL = '/auth/login/'
 LOGIN_REDIRECT_URL = 'foodgram:index'
 LOGOUT_REDIRECT_URL = 'foodgram:index'
