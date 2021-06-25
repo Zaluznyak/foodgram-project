@@ -10,7 +10,8 @@ SECRET_KEY = os.environ.get('SECRET')
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1',
-                 '84.252.135.106']
+                 '84.252.135.106',
+                 'web']
 
 INSTALLED_APPS = [
     'users',
