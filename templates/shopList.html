@@ -13,15 +13,16 @@
         <ul class="shopping-list">
             {% for recipe in object_list %}
                 <li class="shopping-list__item" data-id="{{recipe.id}}">
+                    <a class = "link" href ="{% url 'foodgram:recipe' username=recipe.author.username pk=recipe.pk %}">
                     <div class="recipe recipe_reverse">
                         {% load thumbnail %}
-                        {% thumbnail recipe.image "960x339" as im %}
+                        {% thumbnail recipe.image "90x90" crop="center" upscale=True as im %}
                         <img src="{{ im.url }}" class="recipe__image recipe__image_big">
                         {% endthumbnail %}
                         <h3 class="recipe__title">{{ recipe.name }}</h3>
                         <p class="recipe__text"><span class="icon-time"></span>&#160;&#160;{{ recipe.time }}&#160;мин</p>
                     </div>
-
+                    </a>
                     <a href="{% url 'foodgram:shoplist' %}?recipe_id={{recipe.id}}" class="shopping-list__button link">Удалить</a>
                 </li>
             {% endfor %}

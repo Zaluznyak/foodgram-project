@@ -8,7 +8,7 @@
 {% block content %}
 <div class="single-card" data-id="{{ recipe.id }}" data-author="{{ recipe.author.id }}">
     {% load thumbnail %}
-    {% thumbnail recipe.image "480x480" as im %} 
+    {% thumbnail recipe.image "480x480" crop="center" upscale=True as im %} 
         <img src="{{ im.url }}" alt="{{ recipe.title }}" class="single-card__image">
     {% endthumbnail %}
             <div class="single-card__info">
@@ -28,9 +28,7 @@
                     <ul class="single-card__items">
                         <li class="single-card__item">
                             <p class="single-card__text">
-                                <span class="icon-user"></span>
-                                <a href="{% url 'foodgram:profile' username=recipe.author.username %}" style="color: black"></a>
-                                 {{ recipe.author.get_full_name|default:recipe.author.username }}</a></p></li>
+                                <span class="icon-user"></span> <a href="{% url 'foodgram:profile' recipe.author.username %}" style="color: black"> {{ recipe.author.get_full_name|default:recipe.author.username }}</a></p></li>
                         {% if user.is_admin or recipe.author == user %}
                         <li class="single-card__item">  <a style="margin-left: 2.5em" href="{% url 'foodgram:recipe_edit' recipe.author.username recipe.pk %}" class="single-card__text">Редактировать рецепт</a></li>
                         {% endif %}
