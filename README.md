@@ -1,4 +1,4 @@
-![foodgram workflow](https://github.com/zaluznyak/foodgram-project/actions/workflows/foodgram_workflow.yaml/badge.svg)
+![foodgram workflow](https://github.com/zaluznyak/foodgram-project/actions/workflows/foodgram-workflow.yaml/badge.svg)
 
 Адрес сайта: http://84.252.135.106
 log:admina
