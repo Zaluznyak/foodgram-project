@@ -13,6 +13,7 @@ class IngredientInline(admin.TabularInline):
 class IngredientsAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'dimension')
     search_fields = ('name',)
+    list_filter = ('dimension',)
 
 
 class RecipeAdmin(admin.ModelAdmin):
@@ -25,7 +26,7 @@ class RecipeAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'author', 'count_favorites')
     search_fields = ('name', 'author__username')
     autocomplete_fields = ('author',)
-    list_filter = ('pub_date',)
+    list_filter = ('pub_date', 'tags')
 
 
 class TagAdmin(admin.ModelAdmin):

@@ -8,7 +8,8 @@
                 <li class="nav__item {% if url == 'follow' %} nav__item_active {% endif %}"><a href="{% url 'foodgram:follow' %}" class="nav__link link">Мои подписки</a></li>
                 <li class="nav__item {% if url == 'new' %} nav__item_active {% endif %}"><a href="{% url 'foodgram:new' %}" class="nav__link link">Создать рецепт</a></li>
                 <li class="nav__item {% if url == 'favorites' %} nav__item_active {% endif %}"><a href="{% url 'foodgram:favorites' %}" class="nav__link link">Избранное</a></li>
-                <li class="nav__item {% if url == 'shoplist' %} nav__item_active {% endif %}"><a href="{% url 'foodgram:shoplist' %}" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter">{{ shop_list_count }}</span></li>
+                <li class="nav__item {% if url == 'shoplist' %} nav__item_active {% endif %}"><a href="{% url 'foodgram:shoplist' %}" class="nav__link link">Список покупок</a>
+                    <span class="badge badge_style_blue nav__badge" id="counter">{% if shop_list_count > 0 %} {{ shop_list_count }} {% endif %}</span></li>
             </ul>
             {% endwith %}
             <ul class="nav__items list">

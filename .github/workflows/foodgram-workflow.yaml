@@ -59,6 +59,10 @@ jobs:
             sudo docker-compose rm web
             rm .env
             touch .env 
+            echo EMAIL_HOST=${{ secrets.EMAIL_HOST }} >> .env
+            echo EMAIL_PORT=${{ secrets.EMAIL_PORT }} >> .env
+            echo EMAIL_USER=${{ secrets.EMAIL_USER }} >> .env
+            echo EMAIL_PASSWORD=${{ secrets.EMAIL_PASSWORD }} >> .env
             echo SECRET=${{ secrets.SECRET }} >> .env
             echo DB_ENGINE=${{ secrets.DB_ENGINE }} >> .env
             echo DB_NAME=${{ secrets.DB_NAME }} >> .env

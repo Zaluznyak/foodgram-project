@@ -14,5 +14,6 @@ class Header {
     minusCounter ()  {
         this.counterNum = --this.counterNum;
         this.counter.textContent = this.counterNum;
+        if (this.counterNum == 0) { this.counter.textContent = null; }
     }
 }
