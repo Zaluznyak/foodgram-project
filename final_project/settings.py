@@ -7,7 +7,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 SECRET_KEY = os.environ.get('SECRET')
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1',
                  '84.252.135.106',
