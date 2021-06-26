@@ -43,6 +43,9 @@ def manage_tags(context, **kwargs):
 
 
 @register.filter
-def tags_to_url_params(tags):
-    url_param_tags = [f'tag={tag}' for tag in tags]
-    return '&' + '&'.join(url_param_tags)
+def tags_to_url_params(request):
+    path = request.get_full_path()
+    i = path.find("tags")
+    if i != -1:
+        return '&' + path[i:]
+    return ''
