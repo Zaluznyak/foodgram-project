@@ -45,7 +45,7 @@ def manage_tags(context, **kwargs):
 @register.filter
 def tags_to_url_params(request):
     path = request.get_full_path()
-    i = path.find("tags")
-    if i != -1:
-        return '&' + path[i:]
+    index = path.find("tags")
+    if index != -1:
+        return '&' + path[index:]
     return ''
