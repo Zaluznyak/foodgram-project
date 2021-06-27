@@ -47,5 +47,5 @@ def tags_to_url_params(request):
     path = request.get_full_path()
     index = path.find("tags")
     if index != -1:
-        return '&' + path[index:]
-    return ''
+        return "&" + path[index:]
+    return ""
