@@ -14,9 +14,11 @@
             <div class="single-card__info">
                 <div class="single-card__header-info">
                     <h1 class="single-card__title">{{ recipe.name }}</h1>
-                    <div class="single-card__favorite">
-                        {% include 'includes/button_favorite.html' with recipe=recipe big=True %}    
-                    </div>
+                     {% if user.is_authenticated %}
+                        <div class="single-card__favorite">
+                            {% include 'includes/button_favorite.html' with recipe=recipe big=True %}    
+                        </div>
+                    {% endif %}
                 </div>
                 <ul class="single-card__items">
                     {% for tag in recipe.tags.all %}
