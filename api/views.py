@@ -3,6 +3,7 @@ import types
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, mixins, viewsets
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from foodgram.models import Favorites, Ingredients, ShopList
 from users.models import Follow
@@ -34,6 +35,7 @@ class BaseInstanceView(mixins.CreateModelMixin,
 class FavoritesApiView(BaseInstanceView):
     queryset = Favorites.objects.all()
     serializer_class = serializers.FavoritesSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get_object(self):
         instance = get_object_or_404(
@@ -54,6 +56,7 @@ class IngredientsApiView(mixins.ListModelMixin, viewsets.GenericViewSet):
 class FollowApiView(BaseInstanceView):
     queryset = Follow.objects.all()
     serializer_class = serializers.FollowSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get_object(self):
         instance = get_object_or_404(
@@ -68,6 +71,7 @@ class FollowApiView(BaseInstanceView):
 class ShopListApiView(mixins.ListModelMixin, BaseInstanceView):
     queryset = ShopList.objects.all()
     serializer_class = serializers.ShopListSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get_object(self):
         instance = get_object_or_404(
